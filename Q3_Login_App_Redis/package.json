@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "connect-redis": "^9.0.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "ioredis": "^5.7.0"
+  }
+}

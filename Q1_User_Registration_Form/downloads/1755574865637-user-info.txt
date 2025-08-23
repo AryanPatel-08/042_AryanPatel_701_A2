@@ -1,0 +1,6 @@
+
+            Username: Aryan
+            Email: aryan@gmail.com
+            Gender: Male
+            Hobbies: Traveling, Gaming
+        

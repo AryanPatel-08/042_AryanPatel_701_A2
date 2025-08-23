@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Result</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <h2>Submitted Data</h2>
+    <table border="1">
+        <tr>
+            <td>Username</td>
+            <td>
+                <%= data.username %>
+            </td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>
+                <%= data.email %>
+            </td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td>
+                <%= data.gender %>
+            </td>
+        </tr>
+        <tr>
+            <td>Hobbies</td>
+            <td>
+                <%= Array.isArray(data.hobbies) ? data.hobbies.join(", ") : data.hobbies %></td></tr>
+        <tr>
+            <td>Profile Pic</td>
+            <td><img src=" /uploads/profile/<%=files.profile %>" width="100"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Other Pics</td>
+            <td>
+                <% files.others.forEach(function(file) { %>
+                    <img src="/uploads/others/<%= file %>" width="100" />
+                    <% }); %>
+            </td>
+        </tr>
+    </table>
+
+    <p><a href="<%= downloadPath %>">Download Info File</a></p>
+</body>
+
+</html>

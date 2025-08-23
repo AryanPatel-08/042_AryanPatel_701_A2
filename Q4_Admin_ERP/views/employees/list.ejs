@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head><title>Employees</title></head>
+<body>
+  <h2>Employees</h2>
+  <a href="/admin/employees/add">Add Employee</a><br><br>
+  <table border="1">
+    <tr><th>EmpID</th><th>Name</th><th>Email</th><th>Salary</th><th>Action</th></tr>
+    <% emps.forEach(e => { %>
+      <tr>
+        <td><%= e.empid %></td>
+        <td><%= e.name %></td>
+        <td><%= e.email %></td>
+        <td><%= e.salary %></td>
+        <td>
+          <a href="/admin/employees/delete/<%= e._id %>">Delete</a>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+</body>
+</html>
