@@ -1,30 +1,35 @@
-$(document).ready(function () {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    window.location.href = "index.html";
-  }
-
-  $.ajax({
-    url: "/api/employees/profile",
-    method: "GET",
-    headers: { Authorization: token },
-    success: function (res) {
-      $("#profile").html(`
-        <p><b>Employee ID:</b> ${res.empId}</p>
-        <p><b>Name:</b> ${res.name}</p>
-        <p><b>Email:</b> ${res.email}</p>
-        <p><b>Salary:</b> ${res.salary}</p>
-      `);
-    },
-    error: function () {
-      alert("Session expired, please login again");
-      localStorage.removeItem("token");
-      window.location.href = "index.html";
+document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/index.html';
+        return;
     }
-  });
 
-  $("#logoutBtn").click(function () {
-    localStorage.removeItem("token");
-    window.location.href = "index.html";
-  });
+    try {
+        const res = await fetch('/api/employee/profile', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.error || 'Failed to fetch profile');
+            localStorage.removeItem('token');
+            window.location.href = '/index.html';
+            return;
+        }
+
+        document.getElementById('empName').innerText = data.name;
+        document.getElementById('empEmail').innerText = data.email;
+        document.getElementById('empId').innerText = data.empId;
+    } catch (err) {
+        console.error(err);
+        alert('Error loading profile');
+    }
+});
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('profile');
+    window.location.href = '/index.html';
 });

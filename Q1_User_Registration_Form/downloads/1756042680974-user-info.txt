@@ -1,0 +1,6 @@
+
+            Username: Dhruv
+            Email: dhruv@gmail.com
+            Gender: Male
+            Hobbies: Traveling, Gaming
+        

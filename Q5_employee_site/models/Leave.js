@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
 const leaveSchema = new mongoose.Schema({
-  empId: { type: String, required: true },
-  date: { type: Date, required: true },
-  reason: { type: String, required: true },
-  grant: { type: String, enum: ["Pending", "Yes", "No"], default: "Pending" }
-});
+    employee: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: true },
+    date: { type: Date, required: true },
+    reason: { type: String, required: true },
+    granted: { type: Boolean, default: false } 
+}, { timestamps: true });
 
-export default mongoose.model("Leave", leaveSchema);
+module.exports = mongoose.model('Leave', leaveSchema);

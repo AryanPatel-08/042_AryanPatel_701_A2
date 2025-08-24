@@ -1,19 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Employee Login</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      margin-bottom: 6px;
+      display: block;
+      font-weight: bold;
+      color: #444;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: 0.2s ease;
+    }
+
+    input:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0,123,255,0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    #msg {
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: red;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2>Employee Login</h2>
-  <form id="loginForm">
-    <input type="email" id="email" placeholder="Email" required><br><br>
-    <input type="password" id="password" placeholder="Password" required><br><br>
-    <button type="submit">Login</button>
-  </form>
+  <div class="login-container">
+    <h2>Employee Login</h2>
+    <div id="msg"></div>
+    <form id="loginForm">
+      <label>Email</label>
+      <input type="email" id="email" required />
+      <label>Password</label>
+      <input type="password" id="password" required />
+      <button type="submit">Login</button>
+    </form>
+  </div>
 
-  <p id="message"></p>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $('#loginForm').on('submit', function(e){
+      e.preventDefault();
+      $('#msg').text('');
+      const email = $('#email').val();
+      const password = $('#password').val();
+      $.ajax({
+        url: '/api/auth/login',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ email, password }),
+        success(res) {
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('profile', JSON.stringify(res.profile));
+          window.location.href = '/profile.html';
+        },
+        error(xhr) {
+          $('#msg').text(xhr.responseJSON?.message || 'Login failed');
+        }
+      });
+    });
 
-  <script src="js/auth.js"></script>
+    if (localStorage.getItem('token')) {
+      window.location.href = '/profile.html';
+    }
+  </script>
 </body>
 </html>
